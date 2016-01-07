@@ -4,8 +4,8 @@ help(){
     cat <<HELP
 init_php.sh -- initialize php env conf
 
-USAGE: init_php.sh [PHP_PREFIX] [PHP_VERSION]
-EXAMPLE: init_php.sh /usr/local/php7 7
+USAGE: ./init_php.sh [PHP_PREFIX] [PHP_VERSION]
+EXAMPLE: ./init_php.sh /usr/local/php7 7
 
 HELP
     exit 0
@@ -36,8 +36,10 @@ SED_CMD="s+$S_USR+$X_USR+g; s+$S_PREFIX+$R_PHP_PREFIX+g; s+$S_EXT_DIR+$R_EXT_DIR
 
 sed "$SED_CMD" $SRPT_DIR/conf/php-fpm.conf  > $CONF_DIR/php$R_X_VER-fpm.conf
 sed "$SED_CMD" $SRPT_DIR/conf/php.ini     > $CONF_DIR/php$R_X_VER.ini
+sed "$SED_CMD;s+{x_php_prefix}+$R_PHP_PREFIX+g;" $SRPT_DIR/conf/runphp.sh     > $X_PREFIX/runphp$R_X_VER.sh
+chmod a+x $X_PREFIX/runphp$R_X_VER.sh
 
-sed "s/$S_USR/$X_USR/" $SRPT_DIR/conf/nginx_vhost_x.conf > $CONF_DIR/nginx_vhost_x.conf 
+sed "s+$S_USR+$X_USR+g;s+$S_PHP_VER+$R_X_VER+g;" $SRPT_DIR/conf/nginx_vhost_x.conf > $CONF_DIR/nginx_vhost_x.conf 
 
 echo "
 === SUCCESS! ===
