@@ -8,3 +8,5 @@ pid_file="$X_PREFIX/fpm{x_ver}.pid"
 [ -f $pid_file ] && kill `cat $pid_file`
 
 {x_php_prefix}/sbin/php-fpm -c $CONF_DIR/php{x_ver}.ini -y $CONF_DIR/php{x_ver}-fpm.conf 
+
+chmod 776 $X_PREFIX/php{x_ver}.socket
